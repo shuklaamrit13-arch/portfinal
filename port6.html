@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/emailjs.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1, #f9ca24);
+    color: #fff;
+    line-height: 1.6;
+    overflow-x: hidden;
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    animation: slideDownHeader 1s ease-out;
+}
+
+@keyframes slideDownHeader {
+    from { transform: translateY(-100%); }
+    to { transform: translateY(0); }
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0 0 15px 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0cacf0;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 5px #1108c7; }
+    to { text-shadow: 0 0 20px #82cff3, 0 0 30px #87cbea; }
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+}
+
+.nav-links li {
+    margin-left: 2rem;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+    position: relative;
+}
+
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background: #4ecdc4;
+    transition: width 0.3s;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+.nav-links a:hover {
+    color: #4ecdc4;
+    transform: scale(1.1);
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: #fff;
+    margin: 3px 0;
+    transition: 0.3s;
+    border-radius: 2px;
+}
+
+.hamburger:hover span {
+    background: #4ecdc4;
+}
+
+section {
+    padding: 5rem 2rem;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    margin: 2rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+section.visible {
+    
+}
+
+#hero {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+}
+
+#hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('https://via.placeholder.com/1920x1080?text=Background+Texture') no-repeat center center;
+    background-size: cover;
+    opacity: 0.05;
+    z-index: -1;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    animation: typeWriter 4s steps(40, end), bounceIn 1s ease-out;
+    overflow: hidden;
+    white-space: nowrap;
+    border-right: 3px solid #f9ca24;
+}
+
+@keyframes typeWriter {
+    from { width: 0; }
+    to { width: 100%; }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.05); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.highlight {
+    color: #f9ca24;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
+}
+
+.cta-btn {
+    background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+    color: #fff;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    border-radius: 50px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+.cta-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.cta-btn:hover::before {
+    left: 100%;
+}
+
+.cta-btn:hover {
+    transform: scale(1.05) rotate(1deg);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(45deg, #4ecdc4, #ff6b6b);
+}
+
+.hero-image img {
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    border: 5px solid #f9ca24;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s, box-shadow 0.3s;
+    animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+.hero-image img:hover {
+    transform: rotate(5deg) scale(1.05);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+.skills-grid, .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.skill-card, .project-card {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 15px;
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.skill-card::before, .project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s;
+}
+
+.skill-card:hover::before, .project-card:hover::before {
+    left: 100%;
+}
+
+.skill-card:hover, .project-card:hover {
+    transform: translateY(-10px) rotate(1deg);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.skill-card i {
+    font-size: 3rem;
+    color: #f9ca24;
+    margin-bottom: 1rem;
+    animation: iconBounce 2s infinite;
+}
+
+@keyframes iconBounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-10px); }
+    60% { transform: translateY(-5px); }
+}
+
+.project-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s, filter 0.3s;
+    filter: brightness(1);
+}
+
+.project-card:hover img {
+    transform: scale(1.05);
+    filter: brightness(1.1) saturate(1.2);
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+#contact-form input, #contact-form textarea {
+    margin-bottom: 1rem;
+    padding: 0.75rem;
+    border: none;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    transition: background 0.3s, transform 0.3s;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+#contact-form input:focus, #contact-form textarea:focus {
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    transform: scale(1.02);
+    box-shadow: 0 0 10px rgba(249, 202, 36, 0.5);
+}
+
+#contact-form textarea {
+    resize: vertical;
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    animation: modalFadeIn 0.5s ease-out;
+}
+
+@keyframes modalFadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+.modal-content {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+    padding: 2rem;
+    border-radius: 15px;
+    max-width: 500px;
+    text-align: center;
+    transform: scale(0.8);
+    transition: transform 0.3s;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.close {
+    float: right;
+    font-size: 2rem;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.close:hover {
+    color: #ff6b6b;
+    transform: rotate(90deg);
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background: rgba(0, 0, 0, 0.8);
+    animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        right: 0;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(20px);
+        width: 100%;
+        text-align: center;
+        animation: slideDown 0.5s ease-out;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 0 0 15px 15px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    @keyframes slideDown {
+        from { transform: translateY(-100%); }
+        to { transform: translateY(0); }
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    #hero {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-image img {
+        width: 200px;
+        height: 200px;
+    }
+
+    .skills-grid, .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    section {
+        padding: 6rem 1rem 3rem 1rem; 
+    }
+}
+
+h2 {
+    font-size: 3rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    animation: slideInUp 1s ease-out;
+}
+
+@keyframes slideInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#about p {
+    margin-bottom: 2rem;
+    animation: fadeIn 2s ease-out;
+}
+
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">AMRIT'S PORTFOLIO</div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+           
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    
+
+    <section id="hero">
+        <div class="hero-content">
+            <h1>Hello, I'm <span class="highlight">AMRIT SHUKLA</span></h1>
+            <p class="hero-content">A passionate developer creating amazing web experiences.</p>
+            <a href="#projects" class="cta-btn">View My Work</a>
+        </div>
+        <div class="hero-image">
+            
+            <img src="https://scontent.flko1-2.fna.fbcdn.net/v/t39.30808-6/571323957_1890592988158287_4333959115378505268_n.jpg?stp=dst-jpg_s640x640_tt6&_nc_cat=104&ccb=1-7&_nc_sid=127cfc&_nc_ohc=hcejrpe8N9YQ7kNvwHEsJ64&_nc_oc=AdlMXQ75C2y72KYnjdfXpHxnFLNnK6b0ZefwPNxqEHgZofhVJt-i2drczciwV454g-iAVbec-CifGsBOh9K2cuWN&_nc_zt=23&_nc_ht=scontent.flko1-2.fna&_nc_gid=nlKxvnk0oEzQalvr6oOK_Q&oh=00_Afcry_XJqXHZHalI7XeWreMzizyxMZYIT6AqDJCMzWiZbg&oe=6903F479" alt="Profile Picture" loading="lazy">
+        </div>
+    </section>
+    
+   
+
+    <section id="about">
+        <h2>About Me</h2>
+        <p>Hello! I’m Amrit Shukla, a dedicated and enthusiastic technology professional with a strong passion for designing and developing efficient, scalable, and visually engaging digital solutions. As a tech enthusiast, I constantly seek opportunities to learn emerging technologies and apply them to real-world challenges.</p>
+        <p>My core technical expertise lies in front-end and back-end development using HTML, CSS, Java, React, Node.js, and Python. I enjoy creating seamless user interfaces and robust backend architectures that work together to deliver powerful, responsive applications. In addition, I have a growing interest in full-stack development and application optimization, focusing on performance, accessibility, and user experience.</p>
+        <p>I take pride in being a creative thinker, fast learner, and smart worker, capable of adapting quickly to new environments and technologies. My problem-solving approach is driven by curiosity and precision — I strive to not only meet project goals but also innovate beyond them.</p>
+        <p>With every project, my goal is to build solutions that are clean, maintainable, and impactful. I’m always eager to collaborate, share ideas, and contribute to projects that push the boundaries of technology.</p>
+    </section>
+
+    <section id="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <i class="fab fa-html5"></i>
+                <h3>HTML & CSS</h3>
+                <p>Expert in crafting semantic, responsive layouts.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-js-square"></i>
+                <h3>JavaScript</h3>
+                <p>Building interactive, dynamic web applications.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-react"></i>
+                <h3>React</h3>
+                <p>Developing modern, component-based UIs.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-node-js"></i>
+                <h3>Node.js</h3>
+                <p>Server-side development and APIs.</p>
+            </div>
+            <div class="skill-card">
+                <i class="fab fa-python"></i>
+                <h3>Android App Development Using Python and Kivy</h3>
+                <p>Expert in crafting semantic and responsive Android Apps.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2>Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card" data-project="1">
+               
+                <img src="https://via.placeholder.com/400x300/FF6B6B/FFFFFF?text=Project+1+High+Res" alt="Project 1" loading="lazy">
+                <h3>Project One</h3>
+                <p>A vibrant e-commerce site with modern animations.</p>
+            </div>
+            <div class="project-card" data-project="2">
+                <img src="https://via.placeholder.com/400x300/4ECDC4/FFFFFF?text=Project+2+High+Res" alt="Project 2" loading="lazy">
+                <h3>Project Two</h3>
+                <p>An interactive portfolio with responsive design.</p>
+            </div>
+            <div class="project-card" data-project="3">
+                <img src="https://via.placeholder.com/400x300/45B7D1/FFFFFF?text=Project+3+High+Res" alt="Project 3" loading="lazy">
+                <h3>Project Three</h3>
+                <p>A mobile app prototype with bright UI elements.</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="project-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+            <a href="#" id="modal-link" class="cta-btn">View Live</a>
+        </div>
+    </div>
+
+    <section id="contact">
+        <h2>Contact Me</h2>
+        <form id="contact-form">
+            <input type="text" id="name" placeholder="Your Name" required>
+            <input type="email" id="email" placeholder="Your Email" required>
+            <textarea id="message" placeholder="Your Message" required></textarea>
+            <button type="submit" class="cta-btn">Send Message</button>
+        </form>
+        <a href="mailto:shuklaamrit13@gmail.com?subject=Hello&body=This is a test email.">
+            <h3><img src="https://static.vecteezy.com/system/resources/previews/016/716/465/non_2x/gmail-icon-free-png.png" alt="Gmail" height="40px" loading="lazy"></h3>
+        </a>
+        <a href="https://www.linkedin.com/in/amrit-shukla-27a93b308?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app">
+            <h4><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/LinkedIn_logo_initials.png/960px-LinkedIn_logo_initials.png" alt="LinkedIn" height="40px" loading="lazy"></h4>
+        </a>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 AMRIT SHUKLA. All rights reserved.</p>
+    </footer>
+
+    <script> 
+       // Initialize EmailJS with your Public Key (replace with your actual key from EmailJS dashboard)
+emailjs.init('ejGYK5SCdTJ5DQ2Gk');  // e.g., 'abc123def456'
+
+// Smooth scrolling for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        if (targetElement) {
+            targetElement.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+
+// Hamburger menu toggle for mobile
+const hamburger = document.querySelector('.hamburger');
+const navLinks = document.querySelector('.nav-links');
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
+
+// Project modal functionality
+const modal = document.getElementById('project-modal');
+const modalTitle = document.getElementById('modal-title');
+const modalDescription = document.getElementById('modal-description');
+const modalLink = document.getElementById('modal-link');
+const closeBtn = document.querySelector('.close');
+
+document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', () => {
+        const projectId = card.getAttribute('data-project');
+        // Project data (customize as needed)
+        const projects = {
+            1: { title: 'Project One', desc: 'A vibrant e-commerce site with modern animations. Click to view details.', link: 'project1.html' },  // Link to your project page
+            2: { title: 'Project Two', desc: 'An interactive portfolio with responsive design. Click to view details.', link: 'project2.html' },
+            3: { title: 'Project Three', desc: 'A mobile app prototype with bright UI elements. Click to view details.', link: 'project3.html' }
+        };
+        const project = projects[projectId];
+        if (project) {
+            modalTitle.textContent = project.title;
+            modalDescription.textContent = project.desc;
+            modalLink.href = project.link;
+            modal.style.display = 'flex';
+        }
+    });
+});
+
+// Close modal when clicking the close button or outside the modal
+closeBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+});
+
+window.addEventListener('click', (e) => {
+    if (e.target === modal) {
+        modal.style.display = 'none';
+    }
+});
+
+// Contact form with EmailJS integration
+const contactForm = document.getElementById('contact-form');
+contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    
+    if (name && email && message) {
+        // Send email via EmailJS
+        emailjs.send('service_kcw246k', 'template_lagrtds', {
+            from_name: name,
+            from_email: email,
+            message: message
+        })
+        .then(() => {
+            alert('Message sent successfully! I\'ll get back to you soon.');
+            contactForm.reset();  // Clear the form
+        })
+        .catch((error) => {
+            console.error('EmailJS error:', error);
+            alert('Failed to send message. Please try again or contact me directly at shuklaamrit13@gmail.com.');
+        });
+    } else {
+        alert('Please fill in all fields.');
+    }
+});
+    </script>
+</body>
+</html>
